@@ -1,4 +1,9 @@
-build: dist dist/traberweg.xml all.xml
+build: dist dist/traberweg.xml all.json
+
+install: node_modules osmconvert.c
+
+node_modules:
+	npm install osmtogeojson
 
 dist:
 	mkdir dist
@@ -12,5 +17,8 @@ osmconvert: osmconvert.c
 osmconvert.c:
 	wget http://m.m.i24.cc/osmconvert.c
 
-all.xml: osmconvert dist/traberweg.xml
-	./osmconvert dist/*.xml -o=all.xml
+all.osm: osmconvert dist/traberweg.xml
+	./osmconvert dist/*.xml -o=all.osm
+
+all.json: all.osm
+	npx osmtogeojson all.osm > all.json
