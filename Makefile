@@ -3,7 +3,7 @@ build: dist dist/traberweg.xml all.json
 install: node_modules osmconvert.c
 
 node_modules:
-	npm install osmtogeojson
+	npm install osmtogeojson parcel-bundler
 
 dist:
 	mkdir dist
@@ -21,4 +21,4 @@ all.osm: osmconvert dist/traberweg.xml
 	./osmconvert dist/*.xml -o=all.osm
 
 all.json: all.osm
-	npx osmtogeojson all.osm > all.json
+	npx osmtogeojson all.osm > website/all.json
