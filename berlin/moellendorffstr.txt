@@ -1,0 +1,4 @@
+way[name="Möllendorffstraße"](52.5136216, 13.4774087, 52.5212331, 13.4802892)->.all;
+way.all["cycleway:right"=track];
+(._;>;);
+out body;
