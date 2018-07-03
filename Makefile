@@ -1,5 +1,5 @@
 QUERIES=$(addprefix dist/,$(shell ls -1 berlin))
-XMLS=$(QUERIES:.osm=.xml)
+XMLS=$(QUERIES:.txt=.osm)
 
 build: dist $(XMLS) website/all.json
 
@@ -11,7 +11,7 @@ node_modules:
 dist:
 	mkdir dist
 
-dist/%.xml: berlin/%.osm
+dist/%.osm: berlin/%.txt
 	curl --data @$< http://overpass-api.de/api/interpreter > $@
 
 osmconvert: osmconvert.c
@@ -21,7 +21,7 @@ osmconvert.c:
 	wget http://m.m.i24.cc/osmconvert.c
 
 all.osm: osmconvert $(XMLS)
-	./osmconvert dist/*.xml -o=all.osm
+	./osmconvert dist/*.osm -o=all.osm
 
 website/all.json: all.osm
 	npx osmtogeojson all.osm > website/all.json
