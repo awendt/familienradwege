@@ -4,19 +4,18 @@
 
 h1, h2 {
   font-family: Georgia, serif;
-  font-size: 2em;
+  font-size: 3em;
   font-weight: normal;
 }
 
 .container {
   padding: 50px;
   display: grid;
-  grid-gap: 10px;
-  grid-template-columns: 50% 50%;
+  grid-gap: 30px;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 2fr));
 }
 
 .item {
   border-radius: 5px;
   padding: 20px;
-  font-size: 150%;
 }
