@@ -18,7 +18,7 @@ tools/osmconvert:
 	$(MAKE) -C tools
 
 all.osm: tools/osmconvert $(XMLS)
-	tools/osmconvert dist/*.osm -o=all.osm
+	tools/osmconvert $(XMLS) -o=all.osm
 
 website/all.json: all.osm
 	npx osmtogeojson all.osm > website/all.json
