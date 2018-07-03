@@ -9,7 +9,9 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 function renderGeoJSON() {
   geojsonFeature = JSON.parse(this.responseText);
-  L.geoJSON(geojsonFeature).addTo(mymap);
+  L.geoJSON(geojsonFeature, {
+    pointToLayer: function() {}
+  }).addTo(mymap);
 }
 
 var oReq = new XMLHttpRequest();
