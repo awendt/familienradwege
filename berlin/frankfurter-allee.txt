@@ -1,0 +1,5 @@
+area[name=Berlin];
+way[name="Frankfurter Allee"](area)->.all;
+way.all["cycleway:right"=track];
+(._;>;);
+out body;
