@@ -1,4 +1,4 @@
-var mymap = L.map('mapid').setView([52.480, 13.454], 13);
+var mymap = L.map('mapid').setView([52.480, 13.454], 12);
 
 // Mapbox looks beautiful but requires an API token
 // see https://wiki.openstreetmap.org/wiki/Tiles
