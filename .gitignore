@@ -1,1 +1,5 @@
+/.cache
 /dist
+/node_modules
+/website
+/all.osm
