@@ -1,0 +1,5 @@
+area[name=Berlin];
+way[name=Zillepromenade]->.all;
+way.all[!"area"];
+(._;>;);
+out body;

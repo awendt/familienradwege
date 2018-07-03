@@ -1,0 +1,4 @@
+area[name=Berlin];
+way[name="Paul-und-Paula-Ufer"](area);
+(._;>;);
+out body;
