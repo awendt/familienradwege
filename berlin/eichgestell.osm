@@ -1,0 +1,4 @@
+area[name=Berlin];
+way[name=Eichgestell](area);
+(._;>;);
+out body;
