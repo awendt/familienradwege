@@ -1,0 +1,5 @@
+area[name=Berlin];
+way[name="Alexanderstraße"](area)->.all;
+way.all["cycleway:right"=track];
+(._;>;);
+out body;

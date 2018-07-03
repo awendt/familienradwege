@@ -1,0 +1,5 @@
+area[name=Berlin];
+way[name="Holzmarktstraße"](area)->.all;
+way.all["cycleway:right"=track];
+(._;>;);
+out body;
