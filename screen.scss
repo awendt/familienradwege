@@ -1,0 +1,22 @@
+#mapid {
+  height: 500px;
+}
+
+h1, h2 {
+  font-family: Georgia, serif;
+  font-size: 2em;
+  font-weight: normal;
+}
+
+.container {
+  padding: 50px;
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: 50% 50%;
+}
+
+.item {
+  border-radius: 5px;
+  padding: 20px;
+  font-size: 150%;
+}
