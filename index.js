@@ -14,7 +14,9 @@ function renderGeoJSON() {
   }).addTo(mymap);
 }
 
-var oReq = new XMLHttpRequest();
-oReq.addEventListener("load", renderGeoJSON);
-oReq.open("GET", "/all.json");
-oReq.send();
+['roads', 'manual'].forEach(function(layer) {
+  var oReq = new XMLHttpRequest();
+  oReq.addEventListener("load", renderGeoJSON);
+  oReq.open("GET", "/"+ layer +".json");
+  oReq.send();
+});
