@@ -1,5 +1,5 @@
 area[name=Berlin];
-way[name="Stralauer Allee"](area)->.all;
+way[postal_code~"134.."](area)->.all;
 way.all["cycleway:right"=track];
 (._;>;);
 out body;
