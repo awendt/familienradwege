@@ -1,5 +1,5 @@
 area[name=Berlin];
 way[postal_code~"102.."](area)->.all;
-way.all["cycleway:right"=track];
+way.all[~"^cycleway(:right)?"~"track"];
 (._;>;);
 out body;
