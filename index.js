@@ -14,9 +14,30 @@ function renderGeoJSON() {
   }).addTo(mymap);
 }
 
-['roads', 'manual'].forEach(function(layer) {
+var addDataFor = function(layer) {
+  return function renderGeoJSON() {
+    geojsonFeature = JSON.parse(this.responseText);
+    layer.addData(geojsonFeature);
+  }
+};
+
+var geojson_options = {
+  pointToLayer: function() {}
+};
+
+var layers = {
+  roads: new L.geoJSON(undefined, geojson_options),
+  manual: new L.geoJSON(undefined, geojson_options)
+};
+
+Object.keys(layers).forEach(function(key) {
+  layer = layers[key];
+  layer.addTo(mymap);
+
   var oReq = new XMLHttpRequest();
-  oReq.addEventListener("load", renderGeoJSON);
-  oReq.open("GET", "/"+ layer +".json");
+  oReq.addEventListener("load", addDataFor(layer));
+  oReq.open("GET", "/"+ key +".json");
   oReq.send();
 });
+
+L.control.layers({}, layers).addTo(mymap);
