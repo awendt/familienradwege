@@ -1,3 +1,5 @@
+import { translate_keys } from './i18n';
+
 var mymap = L.map('mapid').setView([52.480, 13.454], 12);
 
 // Mapbox looks beautiful but requires an API token
@@ -16,7 +18,7 @@ function renderGeoJSON() {
 
 var addDataFor = function(layer) {
   return function renderGeoJSON() {
-    geojsonFeature = JSON.parse(this.responseText);
+    const geojsonFeature = JSON.parse(this.responseText);
     layer.addData(geojsonFeature);
   }
 };
@@ -31,7 +33,7 @@ var layers = {
 };
 
 Object.keys(layers).forEach(function(key) {
-  layer = layers[key];
+  const layer = layers[key];
   layer.addTo(mymap);
 
   var oReq = new XMLHttpRequest();
@@ -40,16 +42,4 @@ Object.keys(layers).forEach(function(key) {
   oReq.send();
 });
 
-const l18n = {
-  roads: 'Straßen',
-  manual: 'andere'
-}
-
-const translate_keys = (acc, [key, value]) => {
-  acc[l18n[key]] = value;
-  return acc;
-}
-
-const localized_layers = Object.entries(layers).reduce(translate_keys, {});
-
-L.control.layers({}, localized_layers).addTo(mymap);
+L.control.layers({}, translate_keys(layers)).addTo(mymap);
