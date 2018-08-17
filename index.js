@@ -9,13 +9,6 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   maxZoom: 18
 }).addTo(mymap);
 
-function renderGeoJSON() {
-  geojsonFeature = JSON.parse(this.responseText);
-  L.geoJSON(geojsonFeature, {
-    pointToLayer: function() {}
-  }).addTo(mymap);
-}
-
 var addDataFor = function(layer) {
   return function renderGeoJSON() {
     const geojsonFeature = JSON.parse(this.responseText);
