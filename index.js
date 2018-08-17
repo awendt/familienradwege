@@ -40,4 +40,16 @@ Object.keys(layers).forEach(function(key) {
   oReq.send();
 });
 
-L.control.layers({}, layers).addTo(mymap);
+const l18n = {
+  roads: 'Straßen',
+  manual: 'andere'
+}
+
+const translate_keys = (acc, [key, value]) => {
+  acc[l18n[key]] = value;
+  return acc;
+}
+
+const localized_layers = Object.entries(layers).reduce(translate_keys, {});
+
+L.control.layers({}, localized_layers).addTo(mymap);
