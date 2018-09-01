@@ -16,10 +16,10 @@ dist:
 	mkdir -p dist/manual
 
 dist/roads/%.osm: berlin/roads/%.txt
-	curl --data @$< http://overpass-api.de/api/interpreter > $@
+	curl --fail --data @$< http://overpass-api.de/api/interpreter > $@
 
 dist/manual/%.osm: berlin/manual/%.txt
-	curl --data @$< http://overpass-api.de/api/interpreter > $@
+	curl --fail --data @$< http://overpass-api.de/api/interpreter > $@
 
 tools/osmconvert:
 	$(MAKE) -C tools
