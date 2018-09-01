@@ -4,7 +4,7 @@ ROAD_XMLS=$(ROAD_QUERIES:.txt=.osm)
 MANUAL_QUERIES=$(addprefix dist/manual/,$(shell ls -1 berlin/manual))
 MANUAL_XMLS=$(MANUAL_QUERIES:.txt=.osm)
 
-build: dist $(ROAD_XMLS) $(MANUAL_XMLS) website/roads.json website/manual.json
+build: dist $(ROAD_XMLS) $(MANUAL_XMLS) website/index.html website/roads.json website/manual.json
 
 install: node_modules tools/osmconvert
 
@@ -29,6 +29,10 @@ roads.osm: tools/osmconvert $(ROAD_XMLS)
 
 manual.osm: tools/osmconvert $(MANUAL_XMLS)
 	tools/osmconvert $(MANUAL_XMLS) -o=manual.osm
+
+website/index.html:
+	mkdir -p website
+	npx parcel build index.html --out-dir website
 
 website/roads.json: roads.osm
 	npx osmtogeojson roads.osm > website/roads.json
