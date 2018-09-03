@@ -10,5 +10,6 @@ cache:
   - dist
 
 script:
+  - ls -laR dist
   - make
-  - tree website
+  - ls -laR website
