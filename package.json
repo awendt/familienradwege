@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "osmtogeojson": "^3.0.0-beta.3",
+    "parcel-bundler": "^1.9.7"
+  },
+  "devDependencies": {
+    "node-sass": "^4.9.0"
+  }
+}
