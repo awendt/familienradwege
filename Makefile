@@ -4,14 +4,14 @@ ROAD_XMLS=$(ROAD_QUERIES:.txt=.osm)
 MANUAL_QUERIES=$(addprefix dist/manual/,$(shell ls -1 berlin/manual))
 MANUAL_XMLS=$(MANUAL_QUERIES:.txt=.osm)
 
-build: dist $(ROAD_XMLS) $(MANUAL_XMLS) website/index.html website/roads.json website/manual.json
+build: destination $(ROAD_XMLS) $(MANUAL_XMLS) website/index.html website/roads.json website/manual.json
 
 install: node_modules tools/osmconvert
 
 node_modules:
 	npm install osmtogeojson parcel-bundler
 
-dist:
+destination:
 	mkdir -p dist/roads
 	mkdir -p dist/manual
 
