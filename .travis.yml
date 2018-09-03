@@ -4,4 +4,11 @@ language: node_js
 node_js:
   - node # latest stable Node.js release
 
-script: make
+cache:
+  directories:
+  - node_modules # NPM packages
+  - dist
+
+script:
+  - make
+  - tree website
