@@ -1,5 +1,7 @@
 sudo: false
 
 language: node_js
+node_js:
+  - node # latest stable Node.js release
 
 script: make -n
