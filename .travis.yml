@@ -12,3 +12,10 @@ script:
   - ls -laR dist
   - make
   - ls -laR website
+
+deploy:
+  provider: surge
+  project: ./website/
+  domain: different-shoe.surge.sh
+  skip_cleanup: true
+  on: automate
