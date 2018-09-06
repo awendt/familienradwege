@@ -4,6 +4,14 @@ ROAD_XMLS=$(ROAD_QUERIES:.txt=.osm)
 MANUAL_QUERIES=$(addprefix dist/manual/,$(shell ls -1 berlin/manual))
 MANUAL_XMLS=$(MANUAL_QUERIES:.txt=.osm)
 
+CURL_OPTS = --fail
+ifdef VERBOSE
+  CURL_OPTS += -v
+endif
+ifdef USER_AGENT
+  CURL_OPTS += --user-agent '$(USER_AGENT)'
+endif
+
 build: destination $(ROAD_XMLS) $(MANUAL_XMLS) website/index.html website/roads.json website/manual.json
 
 install: node_modules tools/osmconvert
@@ -16,7 +24,7 @@ destination:
 	mkdir -p dist/manual
 
 dist/roads/%.osm: berlin/roads/%.txt
-	curl --fail --data @$< http://overpass-api.de/api/interpreter > $@
+	curl $(CURL_OPTS) --data @$< http://overpass-api.de/api/interpreter > $@
 
 dist/manual/%.osm: berlin/manual/%.txt
 	curl --fail --data @$< http://overpass-api.de/api/interpreter > $@

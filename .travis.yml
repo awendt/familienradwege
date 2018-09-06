@@ -9,9 +9,7 @@ cache:
   - dist
 
 script:
-  - ls -laR dist
-  - make
-  - ls -laR website
+  - make USER_AGENT="Travis build for github.com/awendt/familienradwege"
 
 deploy:
   provider: surge
