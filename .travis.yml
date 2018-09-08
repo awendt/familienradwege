@@ -9,6 +9,7 @@ cache:
   - dist
 
 script:
+  - curl http://overpass-api.de/api/status
   - make VERBOSE=1 USER_AGENT="Travis build for github.com/awendt/familienradwege"
 
 deploy:
