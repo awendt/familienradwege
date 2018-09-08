@@ -43,7 +43,7 @@ website/index.html:
 	npx parcel build index.html --out-dir website
 
 website/roads.json: roads.osm
-	npx osmtogeojson roads.osm > website/roads.json
+	npx osmtogeojson -m roads.osm > website/roads.json
 
 website/manual.json: manual.osm
-	npx osmtogeojson manual.osm > website/manual.json
+	npx osmtogeojson -m manual.osm > website/manual.json
