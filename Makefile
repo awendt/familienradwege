@@ -42,8 +42,5 @@ website/index.html:
 	mkdir -p website
 	npx parcel build index.html --out-dir website
 
-website/roads.json: roads.osm
-	npx osmtogeojson -m roads.osm > website/roads.json
-
-website/manual.json: manual.osm
-	npx osmtogeojson -m manual.osm > website/manual.json
+website/%.json: %.osm
+	npx osmtogeojson -m $< > $@
