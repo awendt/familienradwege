@@ -1,4 +1,0 @@
-area[name=Berlin];
-way[name="Agnes-Kraus-Weg"](area);
-(._;>;);
-out body;

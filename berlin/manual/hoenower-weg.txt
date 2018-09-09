@@ -1,5 +1,0 @@
-area[name=Berlin];
-way[name="Hönower Weg"](area)->.all;
-way.all[bicycle=designated];
-(._;>;);
-out body;

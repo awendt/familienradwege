@@ -1,5 +1,0 @@
-area[name=Berlin];
-way[name=Traberweg](area)->.all;
-way.all[bicycle=yes];
-(._;>;);
-out body;

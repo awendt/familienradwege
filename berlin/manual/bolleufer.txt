@@ -1,4 +1,0 @@
-area[name=Berlin];
-way[name=Bolleufer](area);
-(._;>;);
-out body;

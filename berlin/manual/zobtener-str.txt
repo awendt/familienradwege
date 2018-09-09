@@ -1,4 +1,0 @@
-area[name=Berlin];
-way[name="Zobtener Straße"](area);
-(._;>;);
-out body;
