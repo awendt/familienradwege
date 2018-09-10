@@ -1,0 +1,7 @@
+area[name="Spandau"]->.a;
+(way(area.a)[bicycle~"designated|yes"][highway=footway];
+way(area.a)[bicycle~"designated|yes"][highway=path];
+way(area.a)[bicycle~"designated|yes"][highway=service];
+);
+(._;>;);
+out body;
