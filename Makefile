@@ -1,8 +1,8 @@
 ROAD_QUERIES=$(addprefix dist/roads/,$(shell ls -1 berlin/roads))
 ROAD_XMLS=$(ROAD_QUERIES:.txt=.osm)
 
-MANUAL_QUERIES=$(addprefix dist/manual/,$(shell ls -1 berlin/manual))
-MANUAL_XMLS=$(MANUAL_QUERIES:.txt=.osm)
+PATH_QUERIES=$(addprefix dist/paths/,$(shell ls -1 berlin/paths))
+PATH_XMLS=$(PATH_QUERIES:.txt=.osm)
 
 CURL_OPTS = --fail
 ifdef VERBOSE
@@ -12,7 +12,7 @@ ifdef USER_AGENT
   CURL_OPTS += --user-agent '$(USER_AGENT)'
 endif
 
-build: destination $(ROAD_XMLS) $(MANUAL_XMLS) website/index.html website/roads.json website/manual.json
+build: destination $(ROAD_XMLS) $(PATH_XMLS) website/index.html website/roads.json website/paths.json
 
 install: node_modules tools/osmconvert
 
@@ -20,13 +20,13 @@ node_modules:
 	npm install osmtogeojson parcel-bundler
 
 destination:
+	mkdir -p dist/paths
 	mkdir -p dist/roads
-	mkdir -p dist/manual
 
 dist/roads/%.osm: berlin/roads/%.txt
 	curl $(CURL_OPTS) --data @$< http://overpass-api.de/api/interpreter > $@
 
-dist/manual/%.osm: berlin/manual/%.txt
+dist/paths/%.osm: berlin/paths/%.txt
 	curl --fail --data @$< http://overpass-api.de/api/interpreter > $@
 
 tools/osmconvert:
@@ -35,8 +35,8 @@ tools/osmconvert:
 roads.osm: tools/osmconvert $(ROAD_XMLS)
 	tools/osmconvert $(ROAD_XMLS) -o=roads.osm
 
-manual.osm: tools/osmconvert $(MANUAL_XMLS)
-	tools/osmconvert $(MANUAL_XMLS) -o=manual.osm
+paths.osm: tools/osmconvert $(PATH_XMLS)
+	tools/osmconvert $(PATH_XMLS) -o=paths.osm
 
 website/index.html:
 	mkdir -p website

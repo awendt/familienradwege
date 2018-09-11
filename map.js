@@ -8,5 +8,5 @@ export const map = L.map('mapid').setView(BERLIN_COORDINATES, 12);
 
 export const layers = {
   roads: new L.geoJSON(undefined, GEOJSON_OPTIONS),
-  manual: new L.geoJSON(undefined, GEOJSON_OPTIONS)
+  paths: new L.geoJSON(undefined, GEOJSON_OPTIONS)
 };

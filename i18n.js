@@ -1,6 +1,6 @@
 const german = {
   roads: 'Straßen',
-  manual: 'andere'
+  paths: 'Wege'
 }
 
 const reducer = (acc, [key, value]) => {
