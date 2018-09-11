@@ -12,6 +12,9 @@ ifdef USER_AGENT
   CURL_OPTS += --user-agent '$(USER_AGENT)'
 endif
 
+# always re-build website
+.PHONY: website/index.html
+
 build: destination $(ROAD_XMLS) $(PATH_XMLS) website/index.html website/roads.json website/paths.json
 
 install: node_modules tools/osmconvert
