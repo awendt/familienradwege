@@ -17,7 +17,7 @@ endif
 
 build: destination $(ROAD_XMLS) $(PATH_XMLS) website/index.html website/roads.json website/paths.json
 
-install: node_modules tools/osmconvert
+install: node_modules tools/osmconvert tools/osmfilter
 
 node_modules:
 	npm install osmtogeojson parcel-bundler
@@ -35,14 +35,26 @@ dist/paths/%.osm: berlin/paths/%.txt
 tools/osmconvert:
 	$(MAKE) -C tools
 
-roads.osm: tools/osmconvert $(ROAD_XMLS)
-	tools/osmconvert $(ROAD_XMLS) -o=roads.osm
+tools/osmfilter:
+	$(MAKE) -C tools
 
-paths.osm: tools/osmconvert $(PATH_XMLS)
-	tools/osmconvert $(PATH_XMLS) -o=paths-all.osm
-	./minlength.js paths-all.osm 10 > dist/tooshort.osc
-	tools/osmconvert paths-all.osm dist/tooshort.osc -o=paths-unclean.osm
-	tools/osmfilter paths-unclean.osm --keep-tags="all bicycle= foot= highway= lit= name= segregated=" -o=paths.osm
+dist/tooshort.osc: paths.combined.osm
+	./minlength.js paths.combined.osm 10 > dist/tooshort.osc
+
+roads.combined.osm: tools/osmconvert $(ROAD_XMLS)
+	tools/osmconvert $(ROAD_XMLS) -o=roads.combined.osm
+
+roads.osm: tools/osmfilter roads.combined.osm
+	tools/osmfilter roads.combined.osm --keep-tags="all bicycle= foot= highway= lit= name= segregated=" -o=roads.osm
+
+paths.combined.osm: tools/osmconvert $(PATH_XMLS)
+	tools/osmconvert $(PATH_XMLS) -o=paths.combined.osm
+
+paths.minlength.osm: tools/osmconvert dist/tooshort.osc paths.combined.osm
+	tools/osmconvert paths.combined.osm dist/tooshort.osc -o=paths.minlength.osm
+
+paths.osm: tools/osmfilter paths.minlength.osm
+	tools/osmfilter paths.minlength.osm --keep-tags="all bicycle= foot= highway= lit= name= segregated=" -o=paths.osm
 
 website/index.html:
 	mkdir -p website
