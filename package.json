@@ -4,7 +4,9 @@
     "parcel-bundler": "^1.9.7"
   },
   "devDependencies": {
+    "haversine": "^1.1.0",
     "node-sass": "^4.9.0",
-    "osmium": "^0.5.7"
+    "osmium": "^0.5.7",
+    "xmlbuilder": "^10.0.0"
   }
 }
