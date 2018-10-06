@@ -39,7 +39,10 @@ roads.osm: tools/osmconvert $(ROAD_XMLS)
 	tools/osmconvert $(ROAD_XMLS) -o=roads.osm
 
 paths.osm: tools/osmconvert $(PATH_XMLS)
-	tools/osmconvert $(PATH_XMLS) -o=paths.osm
+	tools/osmconvert $(PATH_XMLS) -o=paths-all.osm
+	./minlength.js paths-all.osm 10 > dist/tooshort.osc
+	tools/osmconvert paths-all.osm dist/tooshort.osc -o=paths-unclean.osm
+	tools/osmfilter paths-unclean.osm --keep-tags="all bicycle= foot= highway= lit= name= segregated=" -o=paths.osm
 
 website/index.html:
 	mkdir -p website
