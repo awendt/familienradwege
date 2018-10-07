@@ -4,7 +4,7 @@ import { load_json } from './data';
 
 // Mapbox looks beautiful but requires an API token
 // see https://wiki.openstreetmap.org/wiki/Tiles
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+L.tileLayer('https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png', {
   attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
   maxZoom: 18
 }).addTo(map);
