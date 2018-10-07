@@ -13,8 +13,8 @@ script:
   - make VERBOSE=1 USER_AGENT="Travis build for github.com/awendt/familienradwege"
 
 deploy:
-  provider: surge
-  project: ./website/
-  domain: different-shoe.surge.sh
+  provider: firebase
+  message: "$TRAVIS_COMMIT.$TRAVIS_BUILD_NUMBER"
+  project: familienradwege
   skip_cleanup: true
   on: automate
