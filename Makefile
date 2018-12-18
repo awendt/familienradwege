@@ -12,10 +12,7 @@ ifdef USER_AGENT
   CURL_OPTS += --user-agent '$(USER_AGENT)'
 endif
 
-# always re-build website
-.PHONY: website/index.html
-
-build: destination $(ROAD_XMLS) $(PATH_XMLS) website/index.html website/roads.json website/paths.json
+build: destination $(ROAD_XMLS) $(PATH_XMLS) dist/berlin/roads.json dist/berlin/paths.json
 
 install: node_modules tools/osmconvert tools/osmfilter
 
@@ -25,6 +22,7 @@ node_modules:
 destination:
 	mkdir -p dist/paths
 	mkdir -p dist/roads
+	mkdir -p dist/berlin
 
 dist/roads/%.osm: berlin/roads/%.txt
 	curl $(CURL_OPTS) --data @$< http://overpass-api.de/api/interpreter > $@
@@ -56,9 +54,5 @@ paths.minlength.osm: tools/osmconvert dist/tooshort.osc paths.combined.osm
 paths.osm: tools/osmfilter paths.minlength.osm
 	tools/osmfilter paths.minlength.osm --keep-tags="all bicycle= foot= highway= lit= name= segregated=" -o=paths.osm
 
-website/index.html:
-	mkdir -p website
-	npx parcel build index.html --out-dir website
-
-website/%.json: %.osm
+dist/berlin/%.json: %.osm
 	npx osmtogeojson -m $< > $@
