@@ -1,11 +1,9 @@
 {
   "dependencies": {
-    "osmtogeojson": "^3.0.0-beta.3",
-    "parcel-bundler": "^1.9.7"
+    "osmtogeojson": "^3.0.0-beta.3"
   },
   "devDependencies": {
     "haversine": "^1.1.0",
-    "node-sass": "^4.9.0",
     "osmium": "^0.5.7",
     "xmlbuilder": "^10.0.0"
   }
