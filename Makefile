@@ -17,7 +17,7 @@ build: destination $(ROAD_XMLS) $(PATH_XMLS) dist/berlin/roads.json dist/berlin/
 install: node_modules tools/osmconvert tools/osmfilter
 
 node_modules:
-	npm install osmtogeojson parcel-bundler
+	npm install
 
 destination:
 	mkdir -p dist/paths
