@@ -2,7 +2,4 @@
 /dist
 /node_modules
 /website
-/paths.osm
-/roads.osm
-/.firebase/
-/.firebaserc
+/*.osm
