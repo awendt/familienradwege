@@ -1,19 +1,51 @@
-# Familienfreundliche Radwege
+# Family-friendly bike paths
 
-Mit dem Auto kommen Familien in Berlin überall hin.
+This project compiles map data from [Open Street Map](https://wiki.openstreetmap.org/wiki/DE:Hauptseite) and filters family-friendly bike paths.
 
-Aber mit dem Fahrrad? Wie stark ist die Mobilität für Familien mit kleinen Kindern eingeschränkt?
+## Getting started
 
-Um das Problem zu veranschaulichen, kartographieren wir die Radwege,
-die sich für kleine Kinder eignen.
+### Prerequisites
 
-## Kriterien
+This is the software you need:
 
-Um hier aufgenommen zu werden:
+1. GNU Make
+2. Node.js 10.x ([node-osmium](https://github.com/osmcode/node-osmium) provides binaries, it will fall back to source compile and might fail on other versions)
+3. `wget`
 
-* **der Weg muss als Radweg ausgewiesen sein** (damit alle aus der Familie zusammen fahren können und nicht die Großen begleitet auf der Straße und die Kleinen begleitet auf dem Gehweg)
-* **der Weg darf nicht auf der Straße geführt werden** (damit auch die Kleinsten ihn benutzen dürfen — [§2 Abs. 5 StVO](https://dejure.org/gesetze/StVO/2.html))
+### Building the project
 
-## Mach mit!
+Once you have installed all required software,
+in the root directory of this project, run:
 
-Die Wege kann man prima mit Hilfe von [geojson.io](http://geojson.io) erstellen, bisher gibt es nur [eine Karte für Berlin](berlin.json).
+```
+make all
+```
+
+This will do the following:
+
+1. **Install project dependencies**
+   - JS dependencies are installed via `npm` into `node_modules`
+   - tools are compiled from source into `tools`
+2. **Download map data**
+   - query the [Overpass API](https://wiki.openstreetmap.org/wiki/Overpass_API)
+   in small batches
+   - download pieces of map data in
+   [OSM format](https://wiki.openstreetmap.org/wiki/OSM_XML)
+   - combine the pieces into a large file
+3. **Reduce data size**
+   - [filter](https://wiki.openstreetmap.org/wiki/Osmfilter) the data by
+   [keeping only specific parts](https://wiki.openstreetmap.org/wiki/Osmfilter#Tags_Filter)
+   - find ways that are too short, [generate a diff of them](minlength.js)
+   and apply that diff (see [osmChange](https://wiki.openstreetmap.org/wiki/OsmChange))
+4. **Convert data into geoJSON format**
+   - done by [osmtogeojson](https://github.com/tyrasd/osmtogeojson)
+   - why geoJSON? Because it's
+     [supported by Leaflet.js](https://leafletjs.com/examples/geojson/) out-of-the-box
+
+Our [website](https://github.com/awendt/familienradwege-website) then shows that data
+on an interactive map.
+
+### What's missing
+
+We're lacking a way of automatically validating the output, e.g. using
+[geojson-validation](https://www.npmjs.com/package/geojson-validation)
