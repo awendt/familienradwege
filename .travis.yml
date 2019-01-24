@@ -23,4 +23,4 @@ deploy:
   upload-dir: data/berlin
   acl: public_read
   skip_cleanup: true
-  on: automate
+  on: master
