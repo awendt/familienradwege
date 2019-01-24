@@ -12,7 +12,7 @@ ifdef USER_AGENT
   CURL_OPTS += --user-agent '$(USER_AGENT)'
 endif
 
-build: destination $(ROAD_XMLS) $(PATH_XMLS) dist/berlin/roads.json dist/berlin/paths.json
+build: destination lint
 
 install: node_modules tools/osmconvert tools/osmfilter
 
@@ -25,6 +25,10 @@ destination:
 	mkdir -p dist/paths
 	mkdir -p dist/roads
 	mkdir -p dist/berlin
+
+lint: dist/berlin/paths.json dist/berlin/roads.json
+	npx geojsonhint dist/berlin/paths.json
+	npx geojsonhint dist/berlin/roads.json
 
 dist/roads/%.osm: berlin/roads/%.txt
 	curl $(CURL_OPTS) --data @$< http://overpass-api.de/api/interpreter > $@

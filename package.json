@@ -1,10 +1,9 @@
 {
   "dependencies": {
-    "osmtogeojson": "^3.0.0-beta.3"
-  },
-  "devDependencies": {
     "haversine": "^1.1.0",
     "osmium": "^0.5.7",
-    "xmlbuilder": "^10.0.0"
+    "osmtogeojson": "^3.0.0-beta.3",
+    "xmlbuilder": "^10.0.0",
+    "@mapbox/geojsonhint": "^2.1.0"
   }
 }
