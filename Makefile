@@ -12,7 +12,7 @@ ifdef USER_AGENT
   CURL_OPTS += --user-agent '$(USER_AGENT)'
 endif
 
-build: destination lint
+build: roads paths
 
 install: node_modules tools/osmconvert tools/osmfilter
 
@@ -25,10 +25,6 @@ destination:
 	mkdir -p dist/paths
 	mkdir -p dist/roads
 	mkdir -p dist/berlin
-
-lint: dist/berlin/paths.json dist/berlin/roads.json
-	npx geojsonhint dist/berlin/paths.json
-	npx geojsonhint dist/berlin/roads.json
 
 dist/roads/%.osm: berlin/roads/%.txt
 	curl $(CURL_OPTS) --data @$< http://overpass-api.de/api/interpreter > $@
@@ -48,7 +44,7 @@ dist/tooshort.osc: paths.combined.osm
 roads.combined.osm: tools/osmconvert $(ROAD_XMLS)
 	tools/osmconvert $(ROAD_XMLS) -o=roads.combined.osm
 
-roads.osm: tools/osmfilter roads.combined.osm
+roads.osm: destination tools/osmfilter roads.combined.osm
 	tools/osmfilter roads.combined.osm --keep-tags="all bicycle= foot= highway= lit= name= segregated=" -o=roads.osm
 
 paths.combined.osm: tools/osmconvert $(PATH_XMLS)
@@ -57,8 +53,9 @@ paths.combined.osm: tools/osmconvert $(PATH_XMLS)
 paths.minlength.osm: tools/osmconvert dist/tooshort.osc paths.combined.osm
 	tools/osmconvert paths.combined.osm dist/tooshort.osc -o=paths.minlength.osm
 
-paths.osm: tools/osmfilter paths.minlength.osm
+paths.osm: destination tools/osmfilter paths.minlength.osm
 	tools/osmfilter paths.minlength.osm --keep-tags="all bicycle= foot= highway= lit= name= segregated=" -o=paths.osm
 
 dist/berlin/%.json: %.osm
 	npx osmtogeojson -m $< > $@
+	npx geojsonhint $@

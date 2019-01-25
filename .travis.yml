@@ -8,11 +8,19 @@ cache:
   directories:
   - dist
 
-script:
+before_script:
   - curl http://overpass-api.de/api/status
-  - make VERBOSE=1 USER_AGENT="Travis build for github.com/awendt/familienradwege"
 
-deploy:
+jobs:
+  include:
+    - stage: roads
+      script: make dist/berlin/roads.json VERBOSE=1 USER_AGENT="Travis build for github.com/awendt/familienradwege"
+      deploy: *s3
+    - stage: paths
+      script: make dist/berlin/paths.json VERBOSE=1 USER_AGENT="Travis build for github.com/awendt/familienradwege"
+      deploy: *s3
+
+deploy: &s3
   provider: s3
   bucket: familienradwege
   region: eu-central-1
