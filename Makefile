@@ -30,7 +30,7 @@ dist/roads/%.osm: berlin/roads/%.txt
 	curl $(CURL_OPTS) --data @$< http://overpass-api.de/api/interpreter > $@
 
 dist/paths/%.osm: berlin/paths/%.txt
-	curl $(CURL_OPTS) --fail --data @$< http://overpass-api.de/api/interpreter > $@
+	curl $(CURL_OPTS) --data @$< http://overpass-api.de/api/interpreter > $@
 
 tools/osmconvert:
 	$(MAKE) -C tools
