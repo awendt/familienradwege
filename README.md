@@ -1,5 +1,7 @@
 # Family-friendly bike paths
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/awendt/familienradwege.svg)](https://greenkeeper.io/)
+
 This project compiles map data from [Open Street Map](https://wiki.openstreetmap.org/wiki/DE:Hauptseite) and filters family-friendly bike paths.
 
 ## Getting started
