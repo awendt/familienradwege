@@ -40,8 +40,10 @@ purge:
 # Remove random files from the cache
 # -------------------------------------------------
 invalidate_random:
+ifneq (,$(shell ls -1 $(CACHE_DIR)))
 ifneq ($(REFRESH),0)
-	find $(CACHE_DIR) -type f | sort -R | head -$(REFRESH) | xargs rm
+	rm $(shell find $(CACHE_DIR) -type f | sort -R | head -$(REFRESH))
+endif
 endif
 
 # -------------------------------------------------
