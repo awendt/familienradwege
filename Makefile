@@ -1,7 +1,10 @@
-ROAD_QUERIES=$(addprefix dist/roads/,$(shell ls -1 berlin/roads))
+CACHE_DIR ?= tmp
+REFRESH ?= 0
+
+ROAD_QUERIES=$(addprefix $(CACHE_DIR)/,$(shell ls -1 berlin/roads))
 ROAD_XMLS=$(ROAD_QUERIES:.txt=.osm)
 
-PATH_QUERIES=$(addprefix dist/paths/,$(shell ls -1 berlin/paths))
+PATH_QUERIES=$(addprefix $(CACHE_DIR)/,$(shell ls -1 berlin/paths))
 PATH_XMLS=$(PATH_QUERIES:.txt=.osm)
 
 CURL_OPTS = --fail
@@ -12,7 +15,7 @@ ifdef USER_AGENT
   CURL_OPTS += --user-agent '$(USER_AGENT)'
 endif
 
-build: destination $(ROAD_XMLS) $(PATH_XMLS) dist/berlin/roads.json dist/berlin/paths.json
+build: destination prepare_cache $(ROAD_XMLS) $(PATH_XMLS) dist/berlin/roads.json dist/berlin/paths.json
 
 install: node_modules tools/osmconvert tools/osmfilter
 
@@ -22,18 +25,43 @@ node_modules:
 	npm install
 
 destination:
-	mkdir -p dist/paths
-	mkdir -p dist/roads
+	mkdir -p $(CACHE_DIR)
 	mkdir -p dist/berlin
+
+prepare_cache: purge invalidate_random fresh
+
+# -------------------------------------------------
+# Remove failed downloads
+# -------------------------------------------------
+purge:
+	find $(CACHE_DIR) -size 0 | xargs rm
+
+# -------------------------------------------------
+# Remove random files from the cache
+# -------------------------------------------------
+invalidate_random:
+ifneq ($(REFRESH),0)
+	find $(CACHE_DIR) -type f | sort -R | head -$(REFRESH) | xargs rm
+endif
+
+# -------------------------------------------------
+# Make sure the cache is perceived as fresh
+# -------------------------------------------------
+fresh:
+ifneq ($(REFRESH),0)
+	touch $(CACHE_DIR)/*
+endif
 
 # -------------------------------------------------
 # Get map data in OSM format using Overpass queries
 # -------------------------------------------------
-dist/roads/%.osm: berlin/roads/%.txt
+$(CACHE_DIR)/%.osm: berlin/roads/%.txt
 	curl $(CURL_OPTS) --data @$< http://overpass-api.de/api/interpreter > $@
+	sleep 1
 
-dist/paths/%.osm: berlin/paths/%.txt
+$(CACHE_DIR)/%.osm: berlin/paths/%.txt
 	curl $(CURL_OPTS) --data @$< http://overpass-api.de/api/interpreter > $@
+	sleep 1
 
 # ------------------------------------------------
 # Compile required tools:

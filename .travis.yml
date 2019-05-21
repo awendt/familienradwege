@@ -6,13 +6,13 @@ node_js:
 
 cache:
   directories:
-  - dist
+  - cache
 
 before_script:
   - curl http://overpass-api.de/api/status
 
 script:
-  - make --jobs=2 VERBOSE=1 USER_AGENT="Travis build for github.com/awendt/familienradwege"
+  - make --jobs=2 VERBOSE=1 REFRESH=2 CACHE_DIR=cache USER_AGENT="github.com/awendt/familienradwege"
 
 deploy:
   provider: s3
