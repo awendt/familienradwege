@@ -2,17 +2,46 @@
 
 # Family-friendly bike paths
 
-This project compiles map data from [Open Street Map](https://wiki.openstreetmap.org/wiki/DE:Hauptseite) and filters family-friendly bike paths.
+This project compiles map data from [Open Street Map](https://wiki.openstreetmap.org/wiki/Main_Page) and filters family-friendly bike paths.
 
-## Getting started
+## 🧐 What does "family-friendly" mean?
 
-### Prerequisites
+We consider any cycle track to be family-friendly when it's “separated from the road by curbs, parking lots, grass verges, trees or another physical barrier, but is running parallel to and next to the road“ [[src](https://wiki.openstreetmap.org/wiki/Tag:cycleway=track)].
 
-This is the software you need:
+<details>
+<summary>This scope was chosen due to Germany's traffic regulations. 🇩🇪</summary>
+
+In short:
+
+1. Kids aged 8 and under **must** ride on the sidewalk
+2. Kids between 8 and 10 **may** choose between sidewalk and street
+3. Kids aged 10 and old **must** ride on the street
+4. Kids of any age **may** ride on separated (protected) bike lanes.
+5. Parents **may** accompany their kids on the sidewalk.
+
+As a consequence, the only sane solution for families with kids of mixed ages is to
+use separated (protected) bike lanes.
+
+</details>
+
+## 🧩 This is not the whole project
+
+This repository **only deals with map data.**
+It will not yield anything nice to look at
+– that is, _unless_ you like looking at big JSON files. 🤡
+
+If you're looking for the **website** with the interactive map, check out the
+[familienradwege-website](github.com/awendt/familienradwege-website) repository.
+
+## 🚀 Getting started
+
+### What you need
+
+This is the software you need installed on your machine:
 
 1. GNU Make
 2. Node.js 10.x ([node-osmium](https://github.com/osmcode/node-osmium) provides binaries, it will fall back to source compile and might fail on other versions)
-3. `wget`
+3. `wget` and `curl`
 
 ### Building the project
 
@@ -41,13 +70,9 @@ This will do the following:
    and apply that diff (see [osmChange](https://wiki.openstreetmap.org/wiki/OsmChange))
 4. **Convert data into geoJSON format**
    - done by [osmtogeojson](https://github.com/tyrasd/osmtogeojson)
-   - why geoJSON? Because it's
-     [supported by Leaflet.js](https://leafletjs.com/examples/geojson/) out-of-the-box
+   - why geoJSON? Because it's portable (both OpenLayers and Leaflet.js support it)
 
-Our [website](https://github.com/awendt/familienradwege-website) then shows that data
-on an interactive map.
-
-### What's missing
+## What's missing
 
 We're lacking a way of automatically validating the output, e.g. using
 [geojson-validation](https://www.npmjs.com/package/geojson-validation)
