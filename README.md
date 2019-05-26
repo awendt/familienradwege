@@ -31,7 +31,7 @@ It will not yield anything nice to look at
 – that is, _unless_ you like looking at big JSON files. 🤡
 
 If you're looking for the **website** with the interactive map, check out the
-[familienradwege-website](github.com/awendt/familienradwege-website) repository.
+[familienradwege-website](https://github.com/awendt/familienradwege-website) repository.
 
 ## 🚀 Getting started
 
