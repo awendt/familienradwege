@@ -34,7 +34,7 @@ prepare_cache: purge invalidate_random fresh
 # Remove failed downloads
 # -------------------------------------------------
 purge:
-	find $(CACHE_DIR) -size 0 -delete
+	find $(CACHE_DIR) -size 0 -print -delete
 
 # -------------------------------------------------
 # Remove random files from the cache
