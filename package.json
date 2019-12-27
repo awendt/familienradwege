@@ -3,7 +3,7 @@
     "osmtogeojson": "^3.0.0-beta.4"
   },
   "devDependencies": {
-    "haversine": "^1.1.0",
+    "haversine": "^1.1.1",
     "osmium": "^0.5.7",
     "xmlbuilder": "^13.0.2"
   }
