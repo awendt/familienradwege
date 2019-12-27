@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "osmtogeojson": "^3.0.0-beta.3"
+    "osmtogeojson": "^3.0.0-beta.4"
   },
   "devDependencies": {
     "haversine": "^1.1.0",
