@@ -1,5 +1,4 @@
 CACHE_DIR ?= tmp
-REFRESH ?= 0
 
 ROAD_QUERIES=$(addprefix $(CACHE_DIR)/,$(shell ls -1 berlin/roads))
 ROAD_XMLS=$(ROAD_QUERIES:.txt=.osm)
@@ -15,7 +14,7 @@ ifdef USER_AGENT
   CURL_OPTS += --user-agent '$(USER_AGENT)'
 endif
 
-build: destination prepare_cache $(ROAD_XMLS) $(PATH_XMLS) dist/berlin/roads.json dist/berlin/paths.json
+build: destination $(ROAD_XMLS) $(PATH_XMLS) dist/berlin/roads.json dist/berlin/paths.json
 
 install: node_modules tools/osmconvert tools/osmfilter
 
@@ -27,32 +26,6 @@ node_modules:
 destination:
 	mkdir -p $(CACHE_DIR)
 	mkdir -p dist/berlin
-
-prepare_cache: purge invalidate_random fresh
-
-# -------------------------------------------------
-# Remove failed downloads
-# -------------------------------------------------
-purge:
-	find $(CACHE_DIR) -size 0 -print -delete
-
-# -------------------------------------------------
-# Remove random files from the cache
-# -------------------------------------------------
-invalidate_random:
-ifneq (,$(shell ls -1 $(CACHE_DIR)))
-ifneq ($(REFRESH),0)
-	rm $(shell find $(CACHE_DIR) -type f | sort -R | head -$(REFRESH))
-endif
-endif
-
-# -------------------------------------------------
-# Make sure the cache is perceived as fresh
-# -------------------------------------------------
-fresh:
-ifneq ($(REFRESH),0)
-	touch -c $(CACHE_DIR)/*
-endif
 
 # -------------------------------------------------
 # Get map data in OSM format using Overpass queries
