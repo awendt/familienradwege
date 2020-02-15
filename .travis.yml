@@ -14,7 +14,7 @@ before_script:
   - curl http://overpass-api.de/api/status
 
 script:
-  - make --jobs=2 CACHE_DIR=cache USER_AGENT="github.com/awendt/familienradwege"
+  - make --jobs=2 USER_AGENT="github.com/awendt/familienradwege"
 
 deploy:
   provider: s3
