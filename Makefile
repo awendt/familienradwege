@@ -32,11 +32,11 @@ destination:
 # -------------------------------------------------
 $(CACHE_DIR)/%.osm: berlin/roads/%.txt
 	curl $(CURL_OPTS) --data @$< http://overpass-api.de/api/interpreter > $@
-	sleep 1
+	@sleep 1
 
 $(CACHE_DIR)/%.osm: berlin/paths/%.txt
 	curl $(CURL_OPTS) --data @$< http://overpass-api.de/api/interpreter > $@
-	sleep 1
+	@sleep 1
 
 # ------------------------------------------------
 # Compile required tools:
