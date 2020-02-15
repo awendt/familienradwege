@@ -6,7 +6,7 @@ ROAD_XMLS=$(ROAD_QUERIES:.txt=.osm)
 PATH_QUERIES=$(addprefix $(CACHE_DIR)/,$(shell ls -1 berlin/paths))
 PATH_XMLS=$(PATH_QUERIES:.txt=.osm)
 
-CURL_OPTS = --fail --retry 5
+CURL_OPTS = --fail --retry 5 --no-progress-meter
 ifdef VERBOSE
   CURL_OPTS += -v
 endif
