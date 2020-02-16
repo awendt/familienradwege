@@ -1,4 +1,9 @@
+.PHONY: clean install
+
 install: osmconvert osmfilter
+
+clean:
+	git clean -f -X
 
 osmconvert: integrity osmconvert.c
 	cc osmconvert.c -lz -o osmconvert
