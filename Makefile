@@ -1,5 +1,4 @@
 CACHE_DIR ?= tmp
-REFRESH ?= 0
 
 ROAD_QUERIES=$(addprefix $(CACHE_DIR)/,$(shell ls -1 berlin/roads))
 ROAD_XMLS=$(ROAD_QUERIES:.txt=.osm)
@@ -7,7 +6,7 @@ ROAD_XMLS=$(ROAD_QUERIES:.txt=.osm)
 PATH_QUERIES=$(addprefix $(CACHE_DIR)/,$(shell ls -1 berlin/paths))
 PATH_XMLS=$(PATH_QUERIES:.txt=.osm)
 
-CURL_OPTS = --fail
+CURL_OPTS = --fail --retry 5 --no-progress-meter
 ifdef VERBOSE
   CURL_OPTS += -v
 endif
@@ -15,7 +14,7 @@ ifdef USER_AGENT
   CURL_OPTS += --user-agent '$(USER_AGENT)'
 endif
 
-build: destination prepare_cache $(ROAD_XMLS) $(PATH_XMLS) dist/berlin/roads.json dist/berlin/paths.json
+build: destination $(ROAD_XMLS) $(PATH_XMLS) dist/berlin/roads.json dist/berlin/paths.json
 
 install: node_modules tools/osmconvert tools/osmfilter
 
@@ -28,42 +27,16 @@ destination:
 	mkdir -p $(CACHE_DIR)
 	mkdir -p dist/berlin
 
-prepare_cache: purge invalidate_random fresh
-
-# -------------------------------------------------
-# Remove failed downloads
-# -------------------------------------------------
-purge:
-	find $(CACHE_DIR) -size 0 -print -delete
-
-# -------------------------------------------------
-# Remove random files from the cache
-# -------------------------------------------------
-invalidate_random:
-ifneq (,$(shell ls -1 $(CACHE_DIR)))
-ifneq ($(REFRESH),0)
-	rm $(shell find $(CACHE_DIR) -type f | sort -R | head -$(REFRESH))
-endif
-endif
-
-# -------------------------------------------------
-# Make sure the cache is perceived as fresh
-# -------------------------------------------------
-fresh:
-ifneq ($(REFRESH),0)
-	touch -c $(CACHE_DIR)/*
-endif
-
 # -------------------------------------------------
 # Get map data in OSM format using Overpass queries
 # -------------------------------------------------
 $(CACHE_DIR)/%.osm: berlin/roads/%.txt
 	curl $(CURL_OPTS) --data @$< http://overpass-api.de/api/interpreter > $@
-	sleep 1
+	@sleep 1
 
 $(CACHE_DIR)/%.osm: berlin/paths/%.txt
 	curl $(CURL_OPTS) --data @$< http://overpass-api.de/api/interpreter > $@
-	sleep 1
+	@sleep 1
 
 # ------------------------------------------------
 # Compile required tools:
