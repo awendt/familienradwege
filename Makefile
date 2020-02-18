@@ -14,7 +14,7 @@ ifdef USER_AGENT
   CURL_OPTS += --user-agent '$(USER_AGENT)'
 endif
 
-build: destination $(ROAD_XMLS) $(PATH_XMLS) dist/berlin/roads.json dist/berlin/paths.json
+build: $(ROAD_XMLS) $(PATH_XMLS) dist/berlin/roads.json dist/berlin/paths.json
 
 install: node_modules tools/osmconvert tools/osmfilter
 
@@ -23,18 +23,17 @@ all: install build
 node_modules:
 	npm install
 
-destination:
-	mkdir -p $(CACHE_DIR)
-	mkdir -p dist/berlin
+$(CACHE_DIR) dist/berlin:
+	mkdir -p $@
 
 # -------------------------------------------------
 # Get map data in OSM format using Overpass queries
 # -------------------------------------------------
-$(CACHE_DIR)/%.osm: berlin/roads/%.txt
+$(CACHE_DIR)/%.osm: berlin/roads/%.txt $(CACHE_DIR)
 	curl $(CURL_OPTS) --data @$< http://overpass-api.de/api/interpreter > $@
 	@sleep 1
 
-$(CACHE_DIR)/%.osm: berlin/paths/%.txt
+$(CACHE_DIR)/%.osm: berlin/paths/%.txt $(CACHE_DIR)
 	curl $(CURL_OPTS) --data @$< http://overpass-api.de/api/interpreter > $@
 	@sleep 1
 
@@ -85,5 +84,5 @@ paths.osm: tools/osmfilter paths.minlength.osm
 # --------------------------------------------------
 # Finally, convert each OSM file into a geoJSON file
 # --------------------------------------------------
-dist/berlin/%.json: %.osm
+dist/berlin/%.json: %.osm dist/berlin
 	npx osmtogeojson -m $< > $@
