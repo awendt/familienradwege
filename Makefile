@@ -18,6 +18,8 @@ endif
 
 build: $(ROAD_XMLS) $(PATH_XMLS) dist/berlin/roads.json dist/berlin/paths.json
 
+ci: build verify
+
 install: node_modules tools/osmconvert tools/osmfilter
 
 all: install build
