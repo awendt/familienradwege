@@ -1,5 +1,7 @@
 CACHE_DIR ?= tmp
 
+.PHONY: verify
+
 ROAD_QUERIES=$(addprefix $(CACHE_DIR)/,$(shell ls -1 berlin/roads))
 ROAD_XMLS=$(ROAD_QUERIES:.txt=.osm)
 
@@ -86,3 +88,11 @@ paths.osm: tools/osmfilter paths.minlength.osm
 # --------------------------------------------------
 dist/berlin/%.json: %.osm dist/berlin
 	npx osmtogeojson -m $< > $@
+
+# ------------------
+# Verify the results
+# ------------------
+verify: verify-roads verify-paths
+
+verify-%: dist/berlin/%.json fixtures/%.txt
+	./verify.sh $^

@@ -15,6 +15,7 @@ before_script:
 
 script:
   - make --jobs=4 USER_AGENT="github.com/awendt/familienradwege"
+  - make verify
 
 deploy:
   provider: s3
