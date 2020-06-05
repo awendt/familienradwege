@@ -13,6 +13,12 @@ jobs:
         node-version: '10'
     - name: Show API status
       run: curl http://overpass-api.de/api/status
+    - uses: actions/cache@v2
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
     - name: Install dependencies
       run: npm ci
     - name: Build JSON files and verify them
