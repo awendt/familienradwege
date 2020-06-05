@@ -14,6 +14,6 @@ jobs:
     - name: Show API status
       run: curl http://overpass-api.de/api/status
     - name: Build JSON files
-      run: make build --jobs=4 USER_AGENT="github.com/awendt/familienradwege"
+      run: make all --jobs=4 USER_AGENT="github.com/awendt/familienradwege"
     - name: Verify JSON files
       run: make verify
