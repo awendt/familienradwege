@@ -1,6 +1,6 @@
 name: build-json-files
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   build:
