@@ -21,5 +21,41 @@ jobs:
           ${{ runner.os }}-node-
     - name: Install dependencies
       run: npm ci
-    - name: Build JSON files and verify them
-      run: make ci --jobs=4 USER_AGENT="github.com/awendt/familienradwege"
+    - name: Build JSON files
+      run: make build --jobs=4 USER_AGENT="github.com/awendt/familienradwege"
+    - uses: actions/upload-artifact@v2
+      with:
+        name: dist
+        path: dist
+
+  verify:
+    needs: build
+    runs-on: ubuntu-20.04
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Download dist artifact from build job
+      uses: actions/download-artifact@v2
+      with:
+        name: dist
+        path: dist
+    - name: Verify JSON files
+      run: make verify
+
+  upload:
+    if: github.ref == 'refs/heads/github-actions-upload'
+    needs: build
+    runs-on: ubuntu-20.04
+
+    steps:
+    - name: Download dist artifact from build job
+      uses: actions/download-artifact@v2
+      with:
+        name: dist
+        path: dist
+    - name: Upload to S3
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: 'eu-central-1'
+      run: aws s3 cp dist/berlin s3://familienradwege/data/berlin --acl public-read --dryrun --recursive --exclude ".*"
