@@ -30,7 +30,7 @@ jobs:
 
   upload:
     if: github.ref == 'refs/heads/github-actions-upload'
-    needs: verify
+    needs: build
     runs-on: ubuntu-20.04
 
     steps:
