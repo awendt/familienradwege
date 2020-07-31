@@ -1,3 +1,3 @@
 highway:primary:1233:1310
-highway:secondary:3092:3284
-highway:residential:344:366
+highway:secondary:3232:3431
+highway:residential:357:379
