@@ -98,3 +98,10 @@ verify: verify-roads verify-paths
 
 verify-%: dist/berlin/%.json fixtures/%.txt
 	@./verify.sh $^
+
+# ------------------
+# Remove build files
+# ------------------
+clean:
+	rm -rf $(CACHE_DIR)
+	rm -rf dist
