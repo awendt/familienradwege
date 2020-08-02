@@ -1,2 +1,2 @@
-bicycle:designated:1376:1462
-highway:path:2177:2311
+bicycle:designated:1465:1556
+highway:path:2261:2400
