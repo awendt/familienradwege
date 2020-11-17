@@ -27,17 +27,16 @@ all: install build
 node_modules:
 	npm install
 
-$(CACHE_DIR) dist/berlin:
-	mkdir -p $@
-
 # -------------------------------------------------
 # Get map data in OSM format using Overpass queries
 # -------------------------------------------------
-$(CACHE_DIR)/%.osm: berlin/roads/%.txt $(CACHE_DIR)
+$(CACHE_DIR)/%.osm: berlin/roads/%.txt
+	@mkdir -p $(CACHE_DIR)
 	curl $(CURL_OPTS) --data @$< http://overpass-api.de/api/interpreter > $@
 	@sleep 1
 
-$(CACHE_DIR)/%.osm: berlin/paths/%.txt $(CACHE_DIR)
+$(CACHE_DIR)/%.osm: berlin/paths/%.txt
+	@mkdir -p $(CACHE_DIR)
 	curl $(CURL_OPTS) --data @$< http://overpass-api.de/api/interpreter > $@
 	@sleep 1
 
@@ -88,7 +87,8 @@ paths.osm: tools/osmfilter paths.minlength.osm
 # --------------------------------------------------
 # Finally, convert each OSM file into a geoJSON file
 # --------------------------------------------------
-dist/berlin/%.json: %.osm dist/berlin
+dist/berlin/%.json: %.osm
+	@mkdir -p dist/berlin
 	npx osmtogeojson -m $< > $@
 
 # ------------------
