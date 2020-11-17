@@ -1,6 +1,9 @@
 area[name=Berlin]->.berlin;
 rel(area.berlin)[postal_code~"13..."];
 map_to_area -> .postalcode;
+(
 way(area.postalcode)[~"^cycleway(:right)?"~"track"];
+way(area.postalcode)[bicycle="use_sidepath"];
+);
 (._;>;);
 out body;
