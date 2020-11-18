@@ -45,5 +45,7 @@ jobs:
       with:
         name: dist
         path: dist
+    - name: Fake-build all missing files
+      run: mkdir -p tmp && find dist -type f | xargs make --touch
     - name: Verify JSON files
       run: make verify --jobs=2
