@@ -1,2 +1,4 @@
-bicycle:designated:1376:1462
-highway:path:2177:2311
+bicycle:designated:1758:1866
+highway:footway:4364:4634
+highway:path:2567:2725
+highway:service:823:873
