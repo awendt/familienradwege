@@ -86,10 +86,12 @@ paths.osm: tools/osmfilter paths.minlength.osm
 
 # --------------------------------------------------
 # Finally, convert each OSM file into a geoJSON file
+# and remove clutter (in this case, unused nodes)
 # --------------------------------------------------
 dist/berlin/%.json: %.osm
 	@mkdir -p dist/berlin
-	npx osmtogeojson -m $< > $@
+	npx osmtogeojson -m $< | \
+	jq --compact-output '.features |= map(if .geometry.type == "Point" then empty else . end)' > $@
 
 # ------------------
 # Verify the results
