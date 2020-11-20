@@ -40,6 +40,7 @@ This is the software you need installed on your machine:
 1. GNU Make
 2. Node.js 10.x ([node-osmium](https://github.com/osmcode/node-osmium) provides binaries, it will fall back to source compile and might fail on other versions)
 3. `wget` and `curl`
+4. [`jq`](https://stedolan.github.io/jq/), the command-line JSON processor
 
 ### Building the project
 
