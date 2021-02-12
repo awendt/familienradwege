@@ -100,3 +100,8 @@ verify: verify-roads verify-paths
 
 verify-%: dist/berlin/%.json fixtures/%.txt
 	@./verify.rb $^
+
+fixtures: fixtures-roads fixtures-paths
+
+fixtures-%: dist/berlin/%.json fixtures/%.txt
+	@./verify.rb --generate $^

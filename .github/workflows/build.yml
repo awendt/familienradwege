@@ -50,6 +50,8 @@ jobs:
         path: dist
     - name: Fake-build all missing files
       run: mkdir -p tmp && find dist -type f | xargs make --touch
+    - name: Re-generate fixtures
+      run: make fixtures --jobs=2
     - name: Verify JSON files
       run: make verify --jobs=2
 
