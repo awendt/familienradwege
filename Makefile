@@ -99,4 +99,4 @@ dist/berlin/%.json: %.osm
 verify: verify-roads verify-paths
 
 verify-%: dist/berlin/%.json fixtures/%.txt
-	@./verify.sh $^
+	@./verify.rb $^
