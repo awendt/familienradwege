@@ -32,7 +32,7 @@ jobs:
     - name: Build JSON files
       run: make build --jobs=2 USER_AGENT="github.com/awendt/familienradwege"
 
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       with:
         name: dist
         path: dist
