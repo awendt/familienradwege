@@ -2,7 +2,7 @@
   "dependencies": {
     "haversine": "^1.1.1",
     "osmium": "^0.5.7",
-    "osmtogeojson": "^3.0.0-beta.4",
+    "osmtogeojson": "^3.0.0-beta.5",
     "xmlbuilder": "^15.1.1"
   }
 }
